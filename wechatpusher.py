@@ -1,10 +1,9 @@
-from os import error
 import requests
 import json
 
 
-class WeChatPush:
-    '''企业微信推送'''
+class WeChatPusher:
+    """企业微信推送"""
 
     def __init__(self, corpid, agentid, corpsecret):
         # 企业ID
@@ -28,10 +27,11 @@ class WeChatPush:
         # 请求 session
         self.sess = requests.Session()
 
-    def get_token(self):
-        '''获取 access_token'''
+    def _get_token(self):
+        """获取 access_token"""
 
-        res = json.loads(self.sess.get(self.token_url + 'corpid=' + self.corpid + '&corpsecret=' + self.corpsecret).text)
+        res = json.loads(
+            self.sess.get(self.token_url + 'corpid=' + self.corpid + '&corpsecret=' + self.corpsecret).text)
 
         if res['errcode'] != 0:
             return res['errcode']
@@ -41,16 +41,16 @@ class WeChatPush:
         return 0
 
     def send(self, title, description='', url='', btntxt='', user='@all'):
-        '''应用消息发送'''
+        """应用消息发送"""
 
         if description == '':
             description = title
 
         if url == '':
-            url = 'https://github.com/Mythologyli/WeChat-Push'
+            url = 'https://github.com/Mythologyli/WeChatPusher'
 
         if self.access_token == '':
-            res_get = self.get_token() # 更新 access_token
+            res_get = self._get_token()  # 更新 access_token
             if res_get != 0:
                 return res_get
 
@@ -74,13 +74,13 @@ class WeChatPush:
 
         res = json.loads(self.sess.post(url=(self.send_url + self.access_token), data=json.dumps(data)).text)
 
-        if res['errcode'] != 0: # 可能由 access_token 过期造成
-            res_get = self.get_token() # 更新 access_token
+        if res['errcode'] != 0:  # 可能由 access_token 过期造成
+            res_get = self._get_token()  # 更新 access_token
             if res_get != 0:
                 return res_get
-            
+
             res = json.loads(self.sess.post(url=(self.send_url + self.access_token), data=json.dumps(data)).text)
 
             return res['errcode']
-        else: 
+        else:
             return 0

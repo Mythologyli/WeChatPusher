@@ -1,4 +1,4 @@
-# WeChat-Push
+# WeChatPusher
 
 企业微信应用消息推送
 
@@ -13,8 +13,8 @@
 
 ## 使用方法
 
-+ ``from wechatpush import WeChatPush``
-+ 创建实例 ``WeChatPush(corpid, agentid, corpsecret)``
++ ``from wechatpusher import WeChatPusher``
++ 创建实例 ``WeChatPusher(corpid, agentid, corpsecret)``
 + 使用 push 方法发送文本卡片消息
   
   必选参数：
