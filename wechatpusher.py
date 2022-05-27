@@ -30,8 +30,7 @@ class WeChatPusher:
     def _get_token(self):
         """获取 access_token"""
 
-        res = json.loads(
-            self.sess.get(self.token_url + 'corpid=' + self.corpid + '&corpsecret=' + self.corpsecret).text)
+        res = self.sess.get(self.token_url + 'corpid=' + self.corpid + '&corpsecret=' + self.corpsecret).json()
 
         if res['errcode'] != 0:
             return res['errcode']
@@ -72,14 +71,14 @@ class WeChatPusher:
             'duplicate_check_interval': 1800
         }
 
-        res = json.loads(self.sess.post(url=(self.send_url + self.access_token), data=json.dumps(data)).text)
+        res = self.sess.post(url=(self.send_url + self.access_token), json=data).json()
 
         if res['errcode'] != 0:  # 可能由 access_token 过期造成
             res_get = self._get_token()  # 更新 access_token
             if res_get != 0:
                 return res_get
 
-            res = json.loads(self.sess.post(url=(self.send_url + self.access_token), data=json.dumps(data)).text)
+            res = self.sess.post(url=(self.send_url + self.access_token), json=data).json()
 
             return res['errcode']
         else:
