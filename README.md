@@ -22,6 +22,6 @@
   
   可选参数有：
   + description: 描述，不超过 512 个字节，超过会自动截断。默认与标题一致
-  + url: 点击后跳转的链接。最长 2048 字节，请确保包含了协议头(http/https)。默认为 https://github.com/Mythologyli/WeChat-Push
+  + url: 点击后跳转的链接。最长 2048 字节，请确保包含了协议头(http/https)。默认为 https://github.com/Mythologyli/WeChatPusher
   + btntxt: 按钮文字。默认为“详情”，不超过 4 个文字，超过自动截断
   + user: 成员ID列表（消息接收者，多个接收者用‘|’分隔，最多支持 1000 个）。特殊情况：指定为 @all，则向关注该企业应用的全部成员发送。默认为 @all
